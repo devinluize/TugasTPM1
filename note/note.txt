@@ -1,0 +1,8 @@
+php artisan make:model Book
+php artisan migrate --path=/database/migrations/fileName.php
+php artisan makee:controller BukuControler
+
+access-list 174 deny ip host 192.168.10.2 host 192.168.30.3
+access-list 174 permit ip any any
+
+ip access-group -174 in or out inbound or outbond
