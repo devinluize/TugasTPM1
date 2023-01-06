@@ -72,7 +72,9 @@ class BukuControler extends Controller
      */
     public function edit($id)
     {
-        //
+        //        $book = Buku::findOrFail($id);
+
+        return view('editBook', compact('book'));
     }
 
     /**
@@ -85,6 +87,20 @@ class BukuControler extends Controller
     public function update(Request $request, $id)
     {
         //
+        $extension = $request->file('image')->getClientOriginalExtension();
+        // $filename = $request->file('image')->getClientOriginalName();
+        $filename = $request->Judul.'_'.$request->Author.'.'.$extension;
+        $request->file('image')->storeAs('/public/Book/', $filename);
+
+        Buku::findOrFail($id)->update([
+            'Judul' => $request->title,
+            'PublishDate' => $request->publishDate,
+            'Stock' => $request->stock,
+            'Penulis' => $request->author,
+            'image' => $filename
+        ]);
+
+        return redirect('/home');
     }
     /**
      * Remove the specified resource from storage.
@@ -93,8 +109,12 @@ class BukuControler extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function delete($id)
     {
+        // https://tlx.toki.id/problems/inc-2022
+        Buku::destroy($id);
+
+        return redirect('/home');
         //
     }
 }

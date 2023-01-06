@@ -27,6 +27,12 @@
                     <p class="card-text">{{ $book->DateOfBirth }}</p>
                     <p class="card-text">{{ $book->Semester }}</p>
                     <a href="/show-book/{{ $book->id }}" class="btn btn-primary">See detail</a>
+                    <a href="{{ route('edit', $book->id) }}" class="btn btn-success">edit</a>
+                    <form action="/delete-book/{{ $book->id }}" method="POST">
+                        @csrf
+                        @method('delete')
+                        <button class="btn btn-danger">delete</button>
+                    </form>
                 </div>
             </div>
     @endforeach
